@@ -35,3 +35,14 @@ SELECT first_name, last_name, department_name FROM employees
 SELECT first_name, last_name, department_name FROM employees
   LEFT JOIN department USING (department_id)
   ORDER BY first_name ASC;  /* asc as default order */
+
+
+/*                     alter                     */
+
+/* drop column */
+ALTER TABLE department
+DROP COLUMN department_name;
+
+/* drop data in table/table */
+DELETE FROM department  /* VACUUM; to clean size */
+WHERE department_id=10;  /* without whis drops all */
