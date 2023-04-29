@@ -8,5 +8,5 @@ SELECT tg_uid, tries, memes,
 
 /*присвоение номеров значениям как вычисляемое поле в порядке вычислемого поля*/
 /*f ROW_NUMBER исп для присвоение порядкого номера значению в заданном порядке*/
-SELECT *, ROW_NUMBER() OVER (ORDER BY perc, memes DESC) as row_number FROM
+SELECT ROW_NUMBER() OVER (ORDER BY perc DESC, memes DESC) as row_number, * FROM
     (SELECT tg_uid, tries, memes, ROUND(CAST(memes AS REAL) / tries * 100, 2) perc FROM users);
