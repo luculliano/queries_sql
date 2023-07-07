@@ -13,7 +13,9 @@ create table employees (
 );
 
 
-/*                     inserts queries                     */
+/*                     inserts queries
+insert добавляет новый row, а update нет
+ */
 insert into department (department_name)
   values ('prod'), ('commerce'), ('govern');
 

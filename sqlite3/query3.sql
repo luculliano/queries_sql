@@ -7,7 +7,7 @@ create table if not exists users(
     users_id integer primary key autoincrement,
     tg_uid integer unique not null,
     cur_page integer,
-    constraint positive_value check(0 < cur_page and cur_page <= 300),
+    constraint positive_value check(0 < cur_page and cur_page <= 300)  /*ЗАПЯТУЮ НЕ ОСТАВЛЯЙ В КОНЦЕ!*/
 );
 
 create table if not exists bookmarks(
@@ -19,6 +19,9 @@ create table if not exists bookmarks(
     foreign key (users_id) references users(users_id)
     on delete cascade  /*удаление пользователя удалит все с ним записи здесь*/
 );
+
+/*Проверка пользователя в бд - правильный синтаксис, веренет (0,) or (1,)*/
+SELECT EXISTS (SELECT 1 FROM таблица WHERE условие LIMIT 1);
 
 /*/start*/
 INSERT INTO users(tg_uid, cur_page)
@@ -37,5 +40,6 @@ SELECT cur_page, users_id from users WHERE tg_uid = 1;
 /*/deletebookmark (edit_bookmark: delete or cancel)*/
 DELETE FROM bookmarks WHERE users_id = (SELECT users_id from users WHERE tg_uid = 1) and page_number = 12;
 
-/*show boomarks*/
+/*show boomarks учитывая кол-во*/
 SELECT page_number from bookmarks WHERE users_id == (SELECT users_id from users WHERE tg_uid = 1);
+SELECT tg_uid, count(page_number) from bookmarks join users USING(users_id) where users_id = (SELECT users_id from users where tg_uid = 1);
